@@ -86,13 +86,13 @@ class CustomBinding extends Binding {
 // use the script binding for retrieving IBM, etc.
 binding = new CustomBinding()
 
-newOrder.to.buy(100.shares.of(IBM)) {
+newOrder.to.sell(150.shares.of(IBM)) {
     limitPrice   300
     allOrNone    true
-    valueAs      { qty * unitPrice - 500 }
+    valueAs      { qty * unitPrice - 600 }
 }
 
-newOrder.to.sell 200.shares.of(GOOG), {
+newOrder.to.buy 500.shares.of(GOOG), {
     limitPrice   200
     allOrNone    false
     valueAs      { qty * unitPrice - 100 }

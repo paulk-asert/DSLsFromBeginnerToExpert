@@ -1,16 +1,17 @@
+// Example inspired from DSLs in Action: http://www.manning.com/ghosh/
 package one
 
 println new Order()
     .sell(150, "IBM")
     .limitPrice(300)
     .allOrNone(true)
-    .valueAs{ qty, unitPrice -> qty * unitPrice - 100 }
+    .valueAs{ qty, unitPrice -> qty * unitPrice - 600 }
 
 println new Order()
-    .buy(200, "GOOG")
+    .buy(500, "GOOG")
     .limitPrice(200)
     .allOrNone(true)
-    .valueAs{ qty, unitPrice -> qty * unitPrice - 500 }
+    .valueAs{ qty, unitPrice -> qty * unitPrice - 100 }
 
 // ----- Implementation of the Fluent API ---------------
 

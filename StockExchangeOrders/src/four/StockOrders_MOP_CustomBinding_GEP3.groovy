@@ -8,16 +8,16 @@ Integer.metaClass.getShares = { -> delegate }
 
 // ---- Stock exchange orders DSL ---------------------------------
 
-order to buy 200.shares of GOOG {
-    limitPrice       500
+order to sell 150.shares of IBM {
+    limitPrice       300
     allOrNone        false
-    at the value of  { qty * unitPrice - 100 }
+    at the value of  { qty * unitPrice - 600 }
 }
 
-order to sell 150.shares of VMW {
-    limitPrice       80
+order to buy 500.shares of GOOG {
+    limitPrice       200
     allOrNone        true
-    at the value of  { qty * unitPrice }
+    at the value of  { qty * unitPrice - 100 }
 }
 
 // ----- Implementation of the DSL --------------------------------
