@@ -53,6 +53,15 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Grab:tuprolog-2.1.1.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.groovy/grapes/it.unibo.alice.tuprolog/tuprolog/jars/tuprolog-2.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

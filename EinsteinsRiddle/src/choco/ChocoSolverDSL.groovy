@@ -1,3 +1,5 @@
+package choco
+
 @GrabResolver('http://www.emn.fr/z-info/choco-solver/mvn/repository/')
 @Grab('choco:choco-solver:2.1.3')
 import static choco.Choco.*
