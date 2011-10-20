@@ -1,16 +1,14 @@
 package prolog
 
-//@GrabResolver('http://dev.inf.unideb.hu:8090/archiva/repository/internal')
+@GrabResolver('https://oss.sonatype.org/content/repositories/snapshots/')
+@Grab('org.prolog4j:prolog4j-api:0.2.1-SNAPSHOT')
+// uncomment one of next three
+@Grab('org.prolog4j:prolog4j-tuprolog:0.2.1-SNAPSHOT')
+//@Grab('org.prolog4j:prolog4j-jtrolog:0.2.1-SNAPSHOT')
+//@Grab('org.prolog4j:prolog4j-jlog:0.2.1-SNAPSHOT')
+// sometimes useful with above
 //@Grab('jlog:jlogic-debug:1.3.6')
-//@Grab('org.prolog4j:prolog4j-api:0.2.0')
-//one of next three
-//@Grab('org.prolog4j:prolog4j-jlog:0.2.0')
-//@Grab('org.prolog4j:prolog4j-tuprolog:0.2.0')
-//@Grab('org.prolog4j:prolog4j-jtrolog:0.2.0')
-//import org.prolog4j.*
-
-//@Grab('it.unibo.alice.tuprolog:tuprolog:2.1.1')
-//import alice.tuprolog.*
+import org.prolog4j.ProverFactory
 
 def p = ProverFactory.prover
 p.addTheory(new File(/einstein.pl/).text)

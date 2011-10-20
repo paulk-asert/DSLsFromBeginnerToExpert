@@ -1,13 +1,13 @@
 // inspired by http://www.baptiste-wicht.com/2010/09/solve-einsteins-riddle-using-prolog/
 package prolog
 
-@GrabResolver('http://dev.inf.unideb.hu:8090/archiva/repository/internal')
-@Grab('org.prolog4j:prolog4j-api:0.2.0')
+@GrabResolver('https://oss.sonatype.org/content/repositories/snapshots/')
+@Grab('org.prolog4j:prolog4j-api:0.2.1-SNAPSHOT')
 // uncomment one of next three
-//@Grab('org.prolog4j:prolog4j-tuprolog:0.2.0')
-//@Grab('org.prolog4j:prolog4j-jtrolog:0.2.0')
-//@Grab('org.prolog4j:prolog4j-jlog:0.2.0')
-// maybe needed with above
+@Grab('org.prolog4j:prolog4j-tuprolog:0.2.1-SNAPSHOT')
+//@Grab('org.prolog4j:prolog4j-jtrolog:0.2.1-SNAPSHOT')
+//@Grab('org.prolog4j:prolog4j-jlog:0.2.1-SNAPSHOT')
+// sometimes useful with above
 //@Grab('jlog:jlogic-debug:1.3.6')
 import org.prolog4j.*
 
@@ -36,22 +36,22 @@ person(1, [H|_], H) :- !.
 person(N, [_|T], R) :- N1 is N-1, person(N1, T, R).
 ''')
 
-def the(choco.Nationality n) {
+def the(Nationality n) {
   def ctx = [from:n]
   [
     drinks: { d -> addPairHint(ctx + [drink:d]) },
-    plays: { s -> addPairHint(ctx + [play:s]) },
+    plays: { s -> addPairHint(ctx + [sport:s]) },
     keeps: { p -> addPairHint(ctx + [pet:p]) },
     rears: { p -> addPairHint(ctx + [pet:p]) },
     owns:{ _the -> [first:{ house -> addPositionHint(ctx, 1) }] },
     has:{ _a ->
       [pet: { a -> addPairHint(ctx + [pet:a]) }] +
-        choco.Color.values().collectEntries{ c ->
+        Color.values().collectEntries{ c ->
         [c.toString(), { _dummy -> addPairHint(ctx + [color:c]) } ]
       }
     },
     lives: { _next -> [to: { _the ->
-      choco.Color.values().collectEntries{ c ->
+      Color.values().collectEntries{ c ->
         [c.toString(), { _dummy -> addNeighbourHint(ctx, [color:c]) } ]
       }
     }]}
@@ -62,7 +62,7 @@ class HousePlaceHolder {
     def c1, script
     def house(_is) {
         [on: { _the -> [left: { _side -> [of: { __the ->
-            choco.Color.values().collectEntries { c2 ->
+            Color.values().collectEntries { c2 ->
                 [c2.toString(), { _dummy ->
                     script.addToLeftHint([color: c1], [color: c2])
                 }]
@@ -71,9 +71,9 @@ class HousePlaceHolder {
     }
 }
 
-def the(choco.Color c1) {[
+def the(Color c1) {[
   house: { _is -> [on: { _the -> [left: { _side -> [of: { __the ->
-    choco.Color.values().collectEntries{ c2 -> [c2.toString(), { _dummy ->
+    Color.values().collectEntries{ c2 -> [c2.toString(), { _dummy ->
       addToLeftHint([color:c1], [color:c2])
     }]}
   }]}]}]}
@@ -83,27 +83,27 @@ def the(choco.Color c1) {[
 
 def the(String _dummy) {[
   of:{ _the ->
-    choco.Color.values().collectEntries{ c -> [c.toString(), { _house -> [
+    Color.values().collectEntries{ c -> [c.toString(), { _house -> [
       drinks: { d -> addPairHint([color: c, drink: d])},
-      plays: { s -> addPairHint([color: c, play: s])}
+      plays: { s -> addPairHint([color: c, sport: s])}
     ] } ] }
   },
   known: { _to -> [
           play: { s ->
-      def ctx = [play: s]
+      def ctx = [sport: s]
       [
         rears: { a -> addPairHint(ctx + [pet:a])},
         keeps: { a -> addPairHint(ctx + [pet:a])},
-        plays: { d -> addPairHint(ctx + [play:d])},
+        drinks: { d -> addPairHint(ctx + [drink:d])},
         lives: { _next -> [to: { _the -> [one: { _who -> [
           keeps: { a -> addNeighbourHint(ctx, [pet:a]) },
-          drinks: { beverage -> addNeighbourHint(ctx, [drink:beverage]) }
+          drinks: { d -> addNeighbourHint(ctx, [drink:d]) }
         ]}]}]}
       ]
     },
     keep : { pet -> [
       lives: { _next -> [to: { _the -> [man: { _who -> [
-        plays: { brand -> addNeighbourHint([pet:pet], [play:brand]) }
+        plays: { s -> addNeighbourHint([pet:pet], [sport:s]) }
       ]}]}]}
     ]}
   ]},
@@ -115,7 +115,7 @@ def the(String _dummy) {[
 def addPairHint(Map m) {
     def from = m.from?.toString()?.toLowerCase()
     p.addTheory("""
-    hint$hintNum([(${from ?: '_'},${m.color ?: '_'},${m.drink ?: '_'},${m.play ?: '_'},${m.pet ?: '_'})|_]).
+    hint$hintNum([(${from ?: '_'},${m.color ?: '_'},${m.drink ?: '_'},${m.sport ?: '_'},${m.pet ?: '_'})|_]).
     hint$hintNum([_|T]) :- hint$hintNum(T).
     """)
     hintNum++
@@ -124,7 +124,7 @@ def addPairHint(Map m) {
 def addPositionHint(Map m, int pos) {
     def from = m.from?.toString()?.toLowerCase()
     p.addTheory("""
-    hint$hintNum(Persons) :- person($pos, Persons, (${from ?: '_'},${m.color ?: '_'},${m.drink ?: '_'},${m.play ?: '_'},${m.pet ?: '_'})).
+    hint$hintNum(Persons) :- person($pos, Persons, (${from ?: '_'},${m.color ?: '_'},${m.drink ?: '_'},${m.sport ?: '_'},${m.pet ?: '_'})).
     """)
     hintNum++
 }
@@ -140,8 +140,8 @@ def addToLeftHint(Map left, Map right) {
 def addNeighbourHint(Map m1, Map m2) {
     def from1 = m1.from?.toString()?.toLowerCase()
     def from2 = m2.from?.toString()?.toLowerCase()
-    def term1 = "${from1 ?: '_'},${m1.color ?: '_'},${m1.drink ?: '_'},${m1.play ?: '_'},${m1.pet ?: '_'}"
-    def term2 = "${from2 ?: '_'},${m2.color ?: '_'},${m2.drink ?: '_'},${m2.play ?: '_'},${m2.pet ?: '_'}"
+    def term1 = "${from1 ?: '_'},${m1.color ?: '_'},${m1.drink ?: '_'},${m1.sport ?: '_'},${m1.pet ?: '_'}"
+    def term2 = "${from2 ?: '_'},${m2.color ?: '_'},${m2.drink ?: '_'},${m2.sport ?: '_'},${m2.pet ?: '_'}"
     p.addTheory("""
     hint$hintNum([($term1),($term2)|_]).
     hint$hintNum([($term2),($term1)|_]).
