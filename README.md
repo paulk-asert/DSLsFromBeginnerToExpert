@@ -7,3 +7,4 @@ Various DSL examples using the Groovy programming language.
 * __Numismatics__ looks at solving the problem of writing friendly expressions using a Coin Enum example
 * __WebTestingDSL__ looks at writing testing DSLs applicable to a sample web application
 * __StockExchangeOrders__ looks at writing a DSL for orders of stocks and shares
+* __NasaRobot__ looks at writing a DSL for controlling a NASA robot
