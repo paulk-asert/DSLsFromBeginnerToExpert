@@ -20,7 +20,7 @@ import static Nationality.*
 
 // define logic solver data structures
 num = 5
-centre = 2
+center = 2
 first = 0
 println "Solving Einstein's Riddle:"
 
@@ -116,8 +116,8 @@ def the(String _dummy) {[
       ]}]}]}
     ]}
   ]},
-  from: { _the -> [centre: { house ->
-    [drinks: { d -> isEq(drinks[centre], d)}]
+  from: { _the -> [center: { house ->
+    [drinks: { d -> isEq(drinks[center], d)}]
   }]}
 ]}
 
@@ -131,7 +131,7 @@ all colors are different
 all plays are different
 all drinks are different
 all nations are different
-the man from the centre house drinks milk
+the man from the center house drinks milk
 the Norwegian owns the first house
 the Dane drinks tea
 the German plays hockey
