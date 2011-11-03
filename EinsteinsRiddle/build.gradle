@@ -1,0 +1,4 @@
+task downloadJaCoP() {
+    def name = 'JaCoP-3.1.2'
+    ant.get(src: "http://downloads.sourceforge.net/project/jacop-solver/$name/${name}.jar", dest: "lib")
+}
